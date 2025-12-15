@@ -4,6 +4,19 @@ Generates a comprehensive calendar dimension and writes directly to Delta table.
 Target: common.reference.dim_calendar
 All datetime fields are aligned to Eastern Time (America/New_York).
 """
+import time
+
+try:
+    import holidays
+except ImportError:
+    %pip install holidays --quiet
+    time.sleep(10)
+    dbutils.library.restartPython()
+
+    print("Waiting 60 seconds...")
+    time.sleep(60)
+    print("Done waiting.")
+    import holidays
 
 import pandas as pd
 import numpy as np
@@ -11,7 +24,7 @@ from datetime import datetime, date, timedelta
 from zoneinfo import ZoneInfo
 import requests
 import os
-import holidays
+
 
 # Configuration
 TIMEZONE = ZoneInfo("America/New_York")  # Eastern Time (US and Canada)
@@ -88,6 +101,7 @@ def get_quarter_dates(d):
 def localize_to_eastern(dt):
     """Convert a date or datetime to Eastern timezone datetime."""
     if isinstance(dt, date) and not isinstance(dt, datetime):
+        # Convert date to datetime at midnight Eastern
         return datetime(dt.year, dt.month, dt.day, tzinfo=TIMEZONE)
     elif isinstance(dt, datetime):
         if dt.tzinfo is None:
@@ -114,7 +128,7 @@ def generate_calendar_dimension():
     # DATE KEYS & IDENTIFIERS
     # ===========================================
     df['date_key'] = df['full_date'].dt.strftime('%Y%m%d').astype(int)
-    df['calendar_date'] = df['full_date'].dt.date
+    df['calendar_date'] = df['full_date'].dt.date  # DATE type field
     df['date_string'] = df['full_date'].dt.strftime('%m/%d/%Y')
     
     # ===========================================
@@ -203,6 +217,8 @@ def generate_calendar_dimension():
     # ===========================================
     # CONVERT DATETIME FIELDS TO EASTERN TIMEZONE
     # ===========================================
+    # full_date is already in Eastern timezone from date_range
+    # Convert prior_year_date and prior_month_date to timezone-aware timestamps
     df['prior_year_date'] = pd.to_datetime(df['prior_year_date']).dt.tz_localize(None).dt.tz_localize(TIMEZONE)
     df['prior_month_date'] = pd.to_datetime(df['prior_month_date']).dt.tz_localize(None).dt.tz_localize(TIMEZONE)
     
