@@ -1,19 +1,15 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # Daily Refresh: Calendar Dimension Table
-# MAGIC 
+# MAGIC
 # MAGIC This notebook refreshes the calendar dimension table daily.
-# MAGIC 
+# MAGIC
 # MAGIC **Schedule this notebook to run daily (e.g., 6:00 AM Eastern).**
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## 1. Install Dependencies
-
-# COMMAND ----------
-
-# MAGIC %pip install holidays --quiet
 
 # COMMAND ----------
 
@@ -31,6 +27,7 @@ except ImportError:
     time.sleep(60)
     print("Done waiting.")
     import holidays
+
 # COMMAND ----------
 
 # MAGIC %md
