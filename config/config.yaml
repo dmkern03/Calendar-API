@@ -1,0 +1,38 @@
+# Calendar Dimension Configuration
+# ================================
+
+# Date range
+calendar:
+  start_date: "1854-12-01"
+  # end_date is dynamically set to current date
+  
+# Target table
+target:
+  catalog: "common"
+  schema: "reference"
+  table: "dim_calendar"
+  full_name: "common.reference.dim_calendar"
+
+# Timezone
+timezone: "America/New_York"
+
+# FRED API
+fred:
+  secret_scope: "fred-api"
+  secret_key: "api-key"
+  series_id: "USRECD"
+  timeout_seconds: 60
+
+# Delta table properties
+delta:
+  auto_optimize_write: true
+  auto_compact: true
+  z_order_columns:
+    - "year"
+    - "month_number"
+    - "date_key"
+
+# Holidays
+holidays:
+  country: "US"
+  # Includes observed dates automatically
