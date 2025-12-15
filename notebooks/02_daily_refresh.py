@@ -20,7 +20,17 @@
 # Restart Python after pip install
 import time
 time.sleep(5)
+try:
+    import holidays
+except ImportError:
+    %pip install holidays --quiet
+    time.sleep(10)
+    dbutils.library.restartPython()
 
+    print("Waiting 60 seconds...")
+    time.sleep(60)
+    print("Done waiting.")
+    import holidays
 # COMMAND ----------
 
 # MAGIC %md
@@ -34,7 +44,6 @@ from datetime import datetime, date, timedelta
 from zoneinfo import ZoneInfo
 import requests
 import os
-import holidays
 
 # Configuration
 TIMEZONE = ZoneInfo("America/New_York")
