@@ -1,5 +1,9 @@
 # Databricks Calendar Dimension
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 A comprehensive calendar dimension table generator for Databricks, featuring US federal holidays, business day calculations, and FRED recession indicators.
 
 ## Overview
@@ -32,7 +36,8 @@ This project creates and maintains a calendar dimension table (`common.reference
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-org/databricks-calendar-dimension.git
+git clone https://github.com/dmkern03/Calendar-API.git
+cd Calendar-API
 ```
 
 ### 2. Configure FRED API Secret
@@ -96,9 +101,21 @@ See [docs/architecture.md](docs/architecture.md) for solution architecture detai
 4. Push to the branch (`git push origin feature/new-feature`)
 5. Open a Pull Request
 
+## Testing
+
+Run the test suite:
+
+```bash
+pip install -r requirements.txt
+pytest tests/ -v
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-feature-1.0.1 is  V1.0.1
+## Acknowledgments
 
+- [holidays](https://github.com/vacanza/python-holidays) library for US federal holiday detection
+- [FRED API](https://fred.stlouisfed.org/) for recession indicator data
+- [Delta Lake](https://delta.io/) for reliable data storage
